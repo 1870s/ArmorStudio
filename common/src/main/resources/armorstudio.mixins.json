@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.armorstudio.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "AvatarRendererMixin",
+    "EquipmentAssetsCaptureMixin",
+    "EquipmentLayerRendererMixin",
+    "HumanoidArmorLayerMixin",
+    "HumanoidRenderStateMixin",
+    "InventoryScreenMixin",
+    "WingsLayerMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
+}

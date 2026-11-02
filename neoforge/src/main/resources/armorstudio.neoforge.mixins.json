@@ -1,0 +1,12 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.armorstudio.neoforge.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "EquipmentColorMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

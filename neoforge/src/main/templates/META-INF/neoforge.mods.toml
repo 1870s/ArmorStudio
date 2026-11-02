@@ -1,0 +1,35 @@
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="Armor Studio contributors"
+logoFile="assets/armorstudio/icon.png"
+description='''
+Client-side armor customization: hide armor pieces without unequipping them, separate settings for you and
+other players, transparency, colors, glint and trim options, an armor durability HUD and switchable profiles.
+Purely visual - servers and other players do not need the mod.
+'''
+# Client-only mod: the server does not need it and its version is never checked.
+displayTest="IGNORE_ALL_VERSION"
+
+[[mixins]]
+config="armorstudio.mixins.json"
+
+[[mixins]]
+config="armorstudio.neoforge.mixins.json"
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="${neo_version_range}"
+    ordering="NONE"
+    side="CLIENT"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${neoforge_minecraft_range}"
+    ordering="NONE"
+    side="CLIENT"

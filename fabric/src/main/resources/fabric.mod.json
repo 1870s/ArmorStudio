@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "armorstudio",
+  "version": "${version}",
+  "name": "Armor Studio",
+  "description": "Client-side armor customization: hide armor pieces without unequipping them, separate settings for you and other players, transparency, colors, glint and trim options, an armor durability HUD and switchable profiles. Purely visual - servers and other players do not need the mod.",
+  "authors": ["Armor Studio contributors"],
+  "license": "MIT",
+  "icon": "assets/armorstudio/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.armorstudio.fabric.ArmorStudioFabric"]
+  },
+  "mixins": ["armorstudio.mixins.json", "armorstudio.fabric.mixins.json"],
+  "depends": {
+    "fabricloader": ">=${fabric_loader_version}",
+    "minecraft": "${fabric_minecraft_range}",
+    "java": ">=25",
+    "fabric-api": "*"
+  }
+}

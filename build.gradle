@@ -1,0 +1,41 @@
+// Root project: shared settings only. The mod itself is built by :fabric and :neoforge,
+// which both compile the loader independent code from common/.
+//
+// Multi-version layout:
+//   common/src/main/java               code shared by every supported Minecraft version
+//   versions/overlays/<name>/java      code for the Minecraft versions whose vanilla internals differ; each
+//                                      versions/<mc>.properties lists the overlays it uses ("overlays=...")
+//   versions/<mc>.properties           dependency versions for one Minecraft version
+// Select the version with -Pmc_version=<mc>, e.g. ./gradlew build -Pmc_version=26.3
+
+tasks.named('wrapper', Wrapper) {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+def mcVersion = project.property('mc_version').toString()
+def versionFile = file("versions/${mcVersion}.properties")
+if (!versionFile.exists()) {
+    throw new GradleException("Unsupported Minecraft version '${mcVersion}': missing ${versionFile}")
+}
+def versionProps = new Properties()
+versionFile.withInputStream { versionProps.load(it) }
+
+subprojects {
+    versionProps.each { key, value -> project.ext.set(key.toString(), value.toString()) }
+    version = "${mod_version}+${mcVersion}"
+    group = mod_group_id
+
+    def overlays = versionProps.getProperty('overlays', '').split(',').collect { it.trim() }.findAll { !it.isEmpty() }
+    overlays.each { name ->
+        if (!rootProject.file("versions/overlays/${name}/java").isDirectory()) {
+            throw new GradleException("Overlay '${name}' listed in ${versionFile.name} does not exist")
+        }
+    }
+    ext.commonJavaDirs = [rootProject.file('common/src/main/java')] + overlays.collect { rootProject.file("versions/overlays/${it}/java") }
+    ext.commonResourceDirs = [rootProject.file('common/src/main/resources')]
+
+    // Release jars of both loaders are collected in build/libs at the root.
+    tasks.withType(Jar).configureEach {
+        destinationDirectory = rootProject.layout.buildDirectory.dir('libs')
+    }
+}

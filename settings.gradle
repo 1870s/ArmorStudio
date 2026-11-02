@@ -1,0 +1,24 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'NeoForged'
+            url = 'https://maven.neoforged.net/releases'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
+}
+
+rootProject.name = 'armorstudio'
+
+// Loader independent code lives in common/ and is compiled into both loader jars.
+// The Minecraft version is selected with -Pmc_version=<version> (see versions/*.properties).
+include 'fabric', 'neoforge'
